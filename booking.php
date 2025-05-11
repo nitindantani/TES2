@@ -51,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("❌ All fields including Visit Date are required.");
     }
 
-    // === 3) Insert into bookings table ===
-    $sql = "INSERT INTO bookings
+    // === 3) Insert into booking table ===
+    $sql = "INSERT INTO booking
                 (name, visit_date, gender, place, nationality, age, total_tourists, children, adults, mobile, email, unique_code)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $last_id = $conn->insert_id;
 
         // === 4) Fetch the record back ===
-        $select = $conn->prepare("SELECT * FROM bookings WHERE id = ?");
+        $select = $conn->prepare("SELECT * FROM booking WHERE id = ?");
         $select->bind_param("i", $last_id);
         $select->execute();
         $booking = $select->get_result()->fetch_assoc();
