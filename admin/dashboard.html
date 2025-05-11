@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scan Dashboard</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+   
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1 { margin-bottom: 0; }
+    #controls { margin: 10px 0 20px; }
+    label { margin-right: 10px; }
+    table {
+      width: 100%; border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd; padding: 8px;
+      text-align: left;
+    }
+    th { background: #f4f4f4; }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    label, button { font-size: 1rem; }
+    input { padding: 6px; font-size: 1rem; }
+    button { margin-left: 10px; padding: 6px 12px; }
+  </style>
+</head>
+  <h1>🎫 Scan Dashboard</h1>
+  <div id="controls">
+    <label>
+      Date:
+      <input type="date" id="filterDate"/>
+    </label>
+    <button id="refreshBtn">Refresh</button>
+    &nbsp;&nbsp;
+    <strong>Total Scans: <span id="totalCount">0</span></strong>
+  </div>
+</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Name</th><th>Visit Date</th><th>Place</th><th>Mobile</th><th>Email</th><th>Scanned At</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+      <!-- rows go here -->
+    </tbody>
+  </table>
+   <h1>📄 Export Scan Report</h1>
+  <p>
+    <label>From:
+      <input type="date" id="fromDate">
+    </label>
+    <label>To:
+      <input type="date" id="toDate">
+    </label>
+  </p>
+  <p>
+    <button id="csvBtn">Download CSV</button>
+    <button id="pdfBtn">Download PDF</button>
+  </p>
+
+  <script>
+    // default to today
+    const today = new Date().toISOString().slice(0, 10);
+    document.getElementById('fromDate').value = today;
+    document.getElementById('toDate').value = today;
+
+    function downloadReport(format) {
+      const from = document.getElementById('fromDate').value;
+      const to   = document.getElementById('toDate').value;
+      if (!from || !to) {
+        alert("Please select both dates.");
+        return;
+      }
+      window.location = `export_report.php?from=${from}&to=${to}&format=${format}`;
+    }
+
+    document.getElementById('csvBtn').onclick = () => downloadReport('csv');
+    document.getElementById('pdfBtn').onclick = () => downloadReport('pdf');
+
+    const filterDate = document.getElementById('filterDate');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const totalCount = document.getElementById('totalCount');
+    const tbody      = document.getElementById('tbody');
+
+    // set filter to today by default
+    filterDate.value = today;
+
+    async function fetchData() {
+      const date = filterDate.value;
+      const res  = await fetch(`dashboard.php?date=${date}`);
+      const obj  = await res.json();
+      if (!obj.success) {
+        alert('Error: ' + obj.error);
+        return;
+      }
+
+      // update total
+      totalCount.textContent = obj.count;
+
+      // render rows
+      tbody.innerHTML = '';
+      for (let b of obj.bookings) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${b.id}</td>
+          <td>${b.name}</td>
+          <td>${b.visit_date}</td>
+          <td>${b.place}</td>
+          <td>${b.mobile}</td>
+          <td>${b.email}</td>
+          <td>${b.scanned_at}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    // poll every 10s
+    setInterval(fetchData, 10_000);
+    refreshBtn.onclick = fetchData;
+
+    // initial load
+    fetchData();
+    
+  </script>
+</body>
+</html>

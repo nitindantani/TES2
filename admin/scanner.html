@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QR Code Scanner</title>
+  <style>
+    body { font-family: Arial,sans-serif; background:#f0f8ff; padding:20px; }
+    video { width:300px; border:2px solid #007bff; border-radius:8px; }
+    #output { margin-top:15px; white-space:pre-line; }
+    #historyList { margin-top:20px; list-style:disc; padding-left:20px; }
+  </style>
+</head>
+<body>
+  <div id="scanStats">
+  📊 Total Scans Today: <span id="totalScans">0</span>
+  </div>
+
+  <h2>📷 QR Code Scanner</h2>
+  <video id="qr-video" autoplay muted></video>
+  <canvas id="qr-canvas" hidden></canvas>
+  <p id="output">Scanning...</p>
+  <ul id="historyList"></ul>
+
+  <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+  <script>
+  function fetchScanStats() {
+    fetch('scan.php')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('totalScans').textContent = data.total_scans;
+      });
+  }
+
+  // Poll every 5 seconds
+  setInterval(fetchScanStats, 5000);
+  window.onload = fetchScanStats;
+    const video       = document.getElementById("qr-video");
+    const canvas      = document.getElementById("qr-canvas");
+    const ctx         = canvas.getContext("2d");
+    const output      = document.getElementById("output");
+    const historyList = document.getElementById("historyList");
+
+    let scanning      = false;
+    const processing  = new Set();
+    const done        = new Set();
+    const codeDataMap = new Map();
+
+    function parseCode(raw) {
+      const m = raw.match(/Unique Code:\s*(\S+)/);
+      return m ? m[1] : raw.trim();
+    }
+
+    function startScanner() {
+      navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}})
+        .then(s => {
+          video.srcObject = s;
+          video.setAttribute("playsinline",true);
+          video.play();
+          scanning = true;
+          requestAnimationFrame(tick);
+        })
+        .catch(e => {
+          console.error("getUserMedia:", e);
+          output.innerText = "🚫 camera denied";
+        });
+    }
+
+    function tick() {
+      if (!scanning) return;
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.width  = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video,0,0,canvas.width,canvas.height);
+        const img  = ctx.getImageData(0,0,canvas.width,canvas.height);
+        const code = jsQR(img.data,canvas.width,canvas.height);
+        if (code) {
+          const u = parseCode(code.data);
+          console.log("QR RAW:", code.data, "→", u);
+
+          if (done.has(u)) {
+            output.innerText = "⚠️ Already scanned:\n" + JSON.stringify(codeDataMap.get(u),null,2);
+            return setTimeout(restart, 2500);
+          }
+          if (processing.has(u)) {
+            return requestAnimationFrame(tick);
+          }
+
+          processing.add(u);
+          scanning = false;
+          video.srcObject.getTracks().forEach(t=>t.stop());
+          send(u);
+          return;
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function restart() {
+      output.innerText = "🔄 restarting…";
+      startScanner();
+    }
+
+    function send(u) {
+      output.innerText = `⏳ sending ${u}…`;
+      fetch("scan_ticket.php", {
+        method: "POST",
+        headers: {"Content-Type":"application/x-www-form-urlencoded"},
+        body: new URLSearchParams({code:u})
+      })
+      .then(r => r.json().then(json => {
+        console.log("SERVER→", json);
+        processing.delete(u);
+        if (json.success) {
+          done.add(u);
+          codeDataMap.set(u,json.booking);
+          output.innerText = "✅ moved:\n" + JSON.stringify(json.booking,null,2);
+          const li = document.createElement("li");
+          li.textContent = `#${json.booking.id} — ${json.booking.unique_code}`;
+          historyList.appendChild(li);
+        } else {
+          output.innerText = "❌ " + json.error;
+        }
+      }))
+      .catch(e => {
+        console.error("fetch error", e);
+        processing.delete(u);
+        output.innerText = "❌ network error";
+      })
+      .finally(() => setTimeout(restart,2500));
+    }
+
+    window.onload = startScanner;
+  </script>
+</body>
+</html>
