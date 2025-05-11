@@ -3,8 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Connect to DBs
-$booking_conn = new mysqli("localhost", "root", "", "touristbooking");
-$pdf_conn     = new mysqli("localhost", "root", "", "touristpdf");
+$booking_conn = new mysqli("sql206.infinityfree.com", "if0_38952666", "Nitin3001n", "if0_38952666_touristbooking");
+$pdf_conn     = new mysqli("sql206.infinityfree.com", "if0_38952666", "Nitin3001n", "if0_38952666_touristpdf");
 
 if ($booking_conn->connect_error) {
     die("Booking DB connection failed: " . $booking_conn->connect_error);
