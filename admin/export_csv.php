@@ -1,5 +1,19 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "TouristBooking");
+// PostgreSQL connection string
+$host = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
+$port = '5432';
+$dbname = 'touristbooking';
+$user = 'touristbooking_user';
+$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
+
+// Establish connection
+$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+
+if (!$conn) {
+    die("Connection failed: " . pg_last_error());
+} else {
+    echo "Connection successful!";
+}
 
 header('Content-Type: text/csv');
 header('Content-Disposition: attachment;filename="tourist_bookings.csv"');
@@ -9,7 +23,7 @@ $output = fopen("php://output", "w");
 // Column headers
 fputcsv($output, ['ID', 'Name', 'DOV', 'Gender', 'Place', 'Nationality', 'Age','children' ,'adults','Total Tourists', 'Mobile', 'Email', 'Unique Code', 'Created At']);
 
-$result = $conn->query("SELECT * FROM bookings ORDER BY id ASC");
+$result = $conn->query("SELECT * FROM booking ORDER BY id ASC");
 
 while ($row = $result->fetch_assoc()) {
     // Format fields to prevent Excel issues
