@@ -46,7 +46,7 @@ session_start();
                 <p class="location">Kankaria Lake, Ahmadabad</p>
                 <p>The historical Kankaria Lake having a periphery of about 2.5 Km has been the symbol of Ahmadabad's identity since almost 500 years.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Kankaria+Lake,+Ahmadabad" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Kankaria%20Lake'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Kankaria%20Lake'">Book Tickets</button>
 
             </div>
 
@@ -56,7 +56,7 @@ session_start();
                 <p class="location">Kevadia</p>
                 <p>The world's tallest statue is located in Gujarat. The Statue of Unity depicts Indian freedom fighter and politician Sardar Vallabhbhai Patel.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Statue of Unity,+Kevadia" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Statue of Unity'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Statue of Unity'">Book Tickets</button>
 
             </div>
 
@@ -66,7 +66,7 @@ session_start();
                 <p class="location">Rani ki vav, Patan</p>
                 <p>Rani ki vav is an intricately constructed stepwell situated in the town of Patan in Gujarat, India.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=patan,+Rani ki vav" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Rani ki vav'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Rani ki vav'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -75,7 +75,7 @@ session_start();
                 <p class="location">Tirupati Rushivan Adventure Park</p>
                 <p>Tirupati Rushivan Adventure Park is a popular theme park offering thrilling rides, water slides, and replicas of world-famous monuments.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Tirupati Rushivan Adventure Park" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Tirupati Rushivan Adventure Park'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Tirupati Rushivan Adventure Park'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -84,7 +84,7 @@ session_start();
                 <p class="location">Modhera</p>
                 <p>The Sun Temple of Modhera is a Hindu temple dedicated to the solar deity Surya located at Modhera village of Mehsana district, Gujarat, India.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Becharaji,+Modhera sun temple" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Modhera Sun Temple'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Modhera Sun Temple'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -93,7 +93,7 @@ session_start();
                 <p class="location">Bhuj, Gujarat</p>
                 <p>Kutch Museum, located in Bhuj, Gujarat, is the oldest museum in the state, showcasing a rich collection of Kutch’s history, culture, and tribal artifacts.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Kutch Museum,+Bhuj,+Gujarat" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Kutch Museum'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Kutch Museum'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -102,7 +102,7 @@ session_start();
                 <p class="location">Junagadh, Gujarat</p>
                 <p>Home to the majestic Asiatic Lions, Gir is a key wildlife destination in Gujarat.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Gir+National+Park,+Gujarat" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Gir National Park'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Gir National Park'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -111,7 +111,7 @@ session_start();
                 <p class="location">Velavadar, Gujarat</p>
                 <p>Known for blackbuck antelope and unique grassland ecosystem.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Blackbuck+National+Park,+Velavadar" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Blackbuck National Park'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Blackbuck National Park'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -120,7 +120,7 @@ session_start();
                 <p class="location">Gandhinagar, Gujarat</p>
                 <p>A zoological park, botanical garden, and dinosaur museum all in one location.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Indroda+Nature+Park,+Gandhinagar" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?Indroda Nature Park'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?Indroda Nature Park'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -129,7 +129,7 @@ session_start();
                 <p class="location">Navsari, Gujarat</p>
                 <p>A dense forest sanctuary rich in biodiversity and a peaceful retreat into nature.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Vansda+National+Park,+Gujarat" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Vansda National Park'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Vansda National Park'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -138,7 +138,7 @@ session_start();
                 <p class="location">Vadodara, Gujarat</p>
                 <p>One of the grandest palaces in India, still used as a royal residence.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Laxmi+Vilas+Palace,+Vadodara" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Laxmi Vilas Palace'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Laxmi Vilas Palace'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -147,7 +147,7 @@ session_start();
                 <p class="location">Dang, Gujarat</p>
                 <p>Gujarat’s only hill station with panoramic views and cable car rides.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Saputara+Hill+Station,+Gujarat" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Saputara Hill Station'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Saputara Hill Station'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -156,7 +156,7 @@ session_start();
                 <p class="location">Dhordo, Gujarat</p>
                 <p>Salt desert famous for its Rann Utsav festival and scenic beauty.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=White+Rann+of+Kutch,+Dhordo" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=White Rann of Kutch'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=White Rann of Kutch'">Book Tickets</button>
             </div>
 
             <!-- Museums -->
@@ -166,7 +166,7 @@ session_start();
                 <p class="location">Vadodara, Gujarat</p>
                 <p>A blend of Indian and European architectural styles featuring artifacts and art.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Baroda+Museum+and+Picture+Gallery" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Baroda Museum & Picture Gallery'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Baroda Museum & Picture Gallery'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -175,7 +175,7 @@ session_start();
                 <p class="location">Ahmedabad, Gujarat</p>
                 <p>Dedicated to the life and contributions of Sardar Patel with interactive exhibits.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Sardar+Patel+National+Memorial" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Sardar Vallabhbhai Patel Museum'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Sardar Vallabhbhai Patel Museum'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -184,7 +184,7 @@ session_start();
                 <p class="location">Lothal, Gujarat</p>
                 <p>Exhibits tools, pottery, and seals from the ancient Harappan port town.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Lothal+Museum,+Gujarat" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Lothal Archaeological Museum'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Lothal Archaeological Museum'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -193,7 +193,7 @@ session_start();
                 <p class="location">Ahmedabad, Gujarat</p>
                 <p>Collection of classic cars from Rolls Royce to Bentleys with ride options.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Auto+World+Vintage+Car+Museum,+Ahmedabad" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Auto World Vintage Car Museum'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Auto World Vintage Car Museum'">Book Tickets</button>
             </div>
 
             <div class="place-card">
@@ -202,7 +202,7 @@ session_start();
                 <p class="location">Ahmedabad, Gujarat</p>
                 <p>Showcasing traditional Indian utensils in brass, copper, and clay.</p>
                 <p class="map"><a href="https://www.google.com/maps?q=Vechaar+Utensils+Museum,+Ahmedabad" target="_blank">View on Map</a></p>
-                <button class="book-btn" onclick="window.location.href='register.php?place=Vechaar Utensils Museum'">Book Tickets</button>
+                <button class="book-btn" onclick="window.location.href='Register.php?place=Vechaar Utensils Museum'">Book Tickets</button>
             </div>
         </div>
     </div>
@@ -248,11 +248,11 @@ session_start();
         });
     });
 
-    // Booking function: opens register.php with the selected place
+    // Booking function: opens Register.php with the selected place
     function bookPlace(button) {
         const placeCard = button.closest('.place-card');
         const placeName = placeCard.querySelector('h3').textContent.trim();
-        window.location.href = `register.php?place=${encodeURIComponent(placeName)}`;
+        window.location.href = `Register.php?place=${encodeURIComponent(placeName)}`;
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
