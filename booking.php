@@ -15,9 +15,21 @@ include 'phpqrcode/qrlib.php';
 // Load TCPDF
 require_once('TCPDF/tcpdf.php');
 
-// Connect to booking DB
-$conn = new mysqli("sql206.infinityfree.com", "if0_38952666", "Nitin3001n", "if0_38952666_touristbooking");
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+// PostgreSQL connection string
+$host = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
+$port = '5432';
+$dbname = 'touristbooking';
+$user = 'touristbooking_user';
+$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
+
+// Establish connection
+$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+
+if (!$conn) {
+    die("Connection failed: " . pg_last_error());
+} else {
+    echo "Connection successful!";
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // === 1) Fetch & sanitize ===
@@ -102,9 +114,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdf->Image($qr_file, 110, 30, 60, 60, 'PNG');
         $pdf_content = $pdf->Output('', 'S');
 
-        // === 7) Store PDF in TouristPDF DB ===
-        $pdf_conn = new mysqli("sql206.infinityfree.com", "if0_38952666", "Nitin3001n", "if0_38952666_touristpdf");
-        if ($pdf_conn->connect_error) die("PDF DB connection failed: " . $pdf_conn->connect_error);
+        // PostgreSQL connection string
+$host = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
+$port = '5432';
+$dbname = 'touristbooking';
+$user = 'touristbooking_user';
+$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
+
+// Establish connection
+$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+
+if (!$conn) {
+    die("Connection failed: " . pg_last_error());
+} else {
+    echo "Connection successful!";
+}
 
         $stmt_pdf = $pdf_conn->prepare(
             "INSERT INTO booking_pdfs (booking_id, pdf_data) VALUES (?, ?)"
