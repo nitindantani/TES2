@@ -1,7 +1,20 @@
 <?php
-$conn = new mysqli("localhost", "root", "", "TouristBooking");
-$id = $_GET['id'] ?? 0;
-$result = $conn->query("SELECT * FROM bookings WHERE id = $id");
+// PostgreSQL connection string
+$host = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
+$port = '5432';
+$dbname = 'touristbooking';
+$user = 'touristbooking_user';
+$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
+
+// Establish connection
+$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+
+if (!$conn) {
+    die("Connection failed: " . pg_last_error());
+} else {
+    echo "Connection successful!";
+}
+$result = $conn->query("SELECT * FROM booking WHERE id = $id");
 $booking = $result->fetch_assoc();
 ?>
 
