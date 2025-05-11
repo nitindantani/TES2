@@ -5,10 +5,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Database connection
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "touristbooking";
+$host = "sql206.infinityfree.com";
+$user = "if0_38952666";
+$pass = "Nitin3001n";
+$db = "if0_38952666_touristbooking";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
