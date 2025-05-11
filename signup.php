@@ -5,14 +5,20 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Database connection
-$host = "sql206.infinityfree.com";
-$user = "if0_38952666";
-$pass = "Nitin3001n";
-$db = "if0_38952666_touristbooking";
+// PostgreSQL connection string
+$host = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
+$port = '5432';
+$dbname = 'touristbooking';
+$user = 'touristbooking_user';
+$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
 
-$conn = new mysqli($host, $user, $pass, $db);
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Establish connection
+$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+
+if (!$conn) {
+    die("Connection failed: " . pg_last_error());
+} else {
+    echo "Connection successful!";
 }
 
 // Check if form is submitted
