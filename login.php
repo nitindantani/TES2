@@ -1,9 +1,9 @@
 <?php
 // Database connection
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "TouristBooking";
+$host = "sql206.infinityfree.com";
+$user = "if0_38952666";
+$pass = "Nitin3001n";
+$db = "if0_38952666_touristbooking";
 
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
