@@ -2,63 +2,86 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// PostgreSQL connection
-$host     = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
-$port     = '5432';
-$dbname   = 'touristbooking';
-$user     = 'touristbooking_user';
-$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
+// Connect to DBs
+$booking_conn = new mysqli("localhost", "root", "", "touristbooking");
+$pdf_conn     = new mysqli("localhost", "root", "", "touristpdf");
 
-$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
-
-if (!$conn) {
-    die("Connection failed: " . pg_last_error());
+if ($booking_conn->connect_error) {
+    die("Booking DB connection failed: " . $booking_conn->connect_error);
+}
+if ($pdf_conn->connect_error) {
+    die("PDF DB connection failed: " . $pdf_conn->connect_error);
 }
 
-$error = '';
+$error = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $mobile     = trim($_POST['mobile'] ?? '');
+    // 1) Grab & sanitize
+    $mobile     = trim($_POST['mobile']      ?? '');
     $visit_date = trim($_POST['visit_date'] ?? '');
 
+    // 2) Validate
     if (empty($mobile) || empty($visit_date)) {
         $error = "❌ Both mobile number and visit date are required.";
     } elseif (!preg_match('/^\d{10}$/', $mobile)) {
         $error = "❌ Mobile must be 10 digits.";
     }
 
+    // 3) Query bookings
     if (empty($error)) {
-        // 1. Find booking
-        $query1 = "SELECT id, name FROM bookings WHERE mobile = $1 AND visit_date = $2";
-        $result1 = pg_query_params($conn, $query1, [$mobile, $visit_date]);
+        $stmt = $booking_conn->prepare(
+            "SELECT id, name 
+             FROM bookings 
+             WHERE mobile = ? 
+               AND visit_date = ?"
+        );
+        if (!$stmt) {
+            die("Prepare failed: " . $booking_conn->error);
+        }
+        $stmt->bind_param("ss", $mobile, $visit_date);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if (!$result1 || pg_num_rows($result1) === 0) {
+        if ($result->num_rows === 0) {
             $error = "❌ No booking found for that mobile & date.";
         } else {
-            $booking = pg_fetch_assoc($result1);
+            $booking    = $result->fetch_assoc();
             $booking_id = $booking['id'];
+            $stmt->close();
 
-            // 2. Find PDF
-            $query2 = "SELECT pdf_data FROM booking_pdfs WHERE booking_id = $1";
-            $result2 = pg_query_params($conn, $query2, [$booking_id]);
+            // 4) Query PDF
+            $stmt_pdf = $pdf_conn->prepare(
+                "SELECT pdf_data 
+                 FROM booking_pdfs 
+                 WHERE booking_id = ?"
+            );
+            if (!$stmt_pdf) {
+                die("Prepare failed: " . $pdf_conn->error);
+            }
+            $stmt_pdf->bind_param("i", $booking_id);
+            $stmt_pdf->execute();
+            $stmt_pdf->store_result();
 
-            if (!$result2 || pg_num_rows($result2) === 0) {
+            if ($stmt_pdf->num_rows === 0) {
                 $error = "❌ Ticket PDF not found for booking #$booking_id.";
             } else {
-                $row = pg_fetch_assoc($result2);
-                $pdf_data = $row['pdf_data'];
+                $stmt_pdf->bind_result($pdf_data);
+                $stmt_pdf->fetch();
 
-                // 3. Send PDF
+                // 5) Send PDF
                 header('Content-Type: application/pdf');
                 header("Content-Disposition: attachment; filename=ticket_{$booking_id}.pdf");
-                echo pg_unescape_bytea($pdf_data);
+                echo $pdf_data;
                 exit();
             }
+            $stmt_pdf->close();
         }
     }
 }
-?>
 
+$booking_conn->close();
+$pdf_conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
