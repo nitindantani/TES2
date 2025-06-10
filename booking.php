@@ -16,7 +16,7 @@ include 'phpqrcode/qrlib.php';
 require_once('TCPDF/tcpdf.php');
 
 // Connect to booking DB
-$conn = new mysqli("sqlNNN.freesqldatabase.com", "sql12783951", "AY3kzpvH9n", "sql12783951");
+$conn = new mysqli("sql12.freesqldatabase.com", "sql12783951", "AY3kzpvH9n", "sql12783951");
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdf_content = $pdf->Output('', 'S');
 
         // === 7) Store PDF in TouristPDF DB ===
-        $pdf_conn = new mysqli("sqlNNN.freesqldatabase.com", "sql12783951", "AY3kzpvH9n", "sql12783951");
+        $pdf_conn = new mysqli("sql12.freesqldatabase.com", "sql12783951", "AY3kzpvH9n", "sql12783951");
         if ($pdf_conn->connect_error) die("PDF DB connection failed: " . $pdf_conn->connect_error);
 
         $stmt_pdf = $pdf_conn->prepare(
