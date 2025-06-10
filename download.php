@@ -3,20 +3,10 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// PostgreSQL connection string
-$host = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
-$port = '5432';
-$dbname = 'touristbooking';
-$user = 'touristbooking_user';
-$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
-
-// Establish connection
-$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
-
-if (!$conn) {
-    die("Connection failed: " . pg_last_error());
-} else {
-    echo "Connection successful!";
+// Connect to DB
+$conn = new mysqli("localhost", "root", "", "TouristPDF");
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
 // Get the most recent booking ID
