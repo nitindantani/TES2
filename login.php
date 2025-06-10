@@ -1,9 +1,9 @@
 <?php
 // Database connection
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "TouristBooking";
+$host = "sql12.freesqldatabase.com";
+$user = "sql12783951";
+$pass = "AY3kzpvH9n";
+$db = "sql12783951";
 
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
