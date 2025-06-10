@@ -9,20 +9,10 @@ if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
 }
 
 // connect to scanner DB
-// PostgreSQL connection string
-$host = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
-$port = '5432';
-$dbname = 'touristbooking';
-$user = 'touristbooking_user';
-$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
-
-// Establish connection
-$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
-
-if (!$conn) {
-    die("Connection failed: " . pg_last_error());
-} else {
-    echo "Connection successful!";
+$db = new mysqli('localhost','root','','scanner');
+if ($db->connect_error) {
+  echo json_encode(['success'=>false,'error'=>'DB connect failed']);
+  exit;
 }
 
 // count and fetch rows stamped with created_at on that date
