@@ -15,7 +15,7 @@ if (!in_array($format, ['csv', 'pdf'])) {
 }
 
 // 2) DB query
-$db = new mysqli('localhost', 'root', '', 'scanner');
+$db = new mysqli("sql12.freesqldatabase.com", "sql12783951", "AY3kzpvH9n", "sql12783951");
 if ($db->connect_error) {
     die("DB connection failed: " . $db->connect_error);
 }
