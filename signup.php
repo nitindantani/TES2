@@ -5,10 +5,10 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Database connection
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db = "touristbooking";
+$host = "sql12.freesqldatabase.com";
+$user = "sql12783951";
+$pass = "AY3kzpvH9n";
+$db = "sql12783951";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
