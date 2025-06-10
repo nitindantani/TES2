@@ -15,6 +15,8 @@ ini_set('display_errors', 1);
 $conn = new mysqli("sql12.freesqldatabase.com", "sql12783951", "AY3kzpvH9n", "sql12783951");
 if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
+$conn->query("SET time_zone = '+05:30'");
+date_default_timezone_set('Asia/Kolkata');
 // Fetch all bookings, ordering by ID
 $sql = "SELECT * FROM bookings ORDER BY id ASC";
 $result = $conn->query($sql);
