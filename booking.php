@@ -15,21 +15,9 @@ include 'phpqrcode/qrlib.php';
 // Load TCPDF
 require_once('TCPDF/tcpdf.php');
 
-// PostgreSQL connection string
-$host = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
-$port = '5432';
-$dbname = 'touristbooking';
-$user = 'touristbooking_user';
-$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
-
-// Establish connection
-$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
-
-if (!$conn) {
-    die("Connection failed: " . pg_last_error());
-} else {
-    echo "Connection successful!";
-}
+// Connect to booking DB
+$conn = new mysqli("localhost", "root", "", "TouristBooking");
+if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // === 1) Fetch & sanitize ===
@@ -51,8 +39,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("❌ All fields including Visit Date are required.");
     }
 
-    // === 3) Insert into booking table ===
-    $sql = "INSERT INTO booking
+    // === 3) Insert into bookings table ===
+    $sql = "INSERT INTO bookings
                 (name, visit_date, gender, place, nationality, age, total_tourists, children, adults, mobile, email, unique_code)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
@@ -79,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $last_id = $conn->insert_id;
 
         // === 4) Fetch the record back ===
-        $select = $conn->prepare("SELECT * FROM booking WHERE id = ?");
+        $select = $conn->prepare("SELECT * FROM bookings WHERE id = ?");
         $select->bind_param("i", $last_id);
         $select->execute();
         $booking = $select->get_result()->fetch_assoc();
@@ -114,21 +102,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pdf->Image($qr_file, 110, 30, 60, 60, 'PNG');
         $pdf_content = $pdf->Output('', 'S');
 
-        // PostgreSQL connection string
-$host = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
-$port = '5432';
-$dbname = 'touristbooking';
-$user = 'touristbooking_user';
-$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
-
-// Establish connection
-$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
-
-if (!$conn) {
-    die("Connection failed: " . pg_last_error());
-} else {
-    echo "Connection successful!";
-}
+        // === 7) Store PDF in TouristPDF DB ===
+        $pdf_conn = new mysqli("localhost", "root", "", "TouristPDF");
+        if ($pdf_conn->connect_error) die("PDF DB connection failed: " . $pdf_conn->connect_error);
 
         $stmt_pdf = $pdf_conn->prepare(
             "INSERT INTO booking_pdfs (booking_id, pdf_data) VALUES (?, ?)"
