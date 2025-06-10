@@ -1,21 +1,16 @@
-# Use the official PHP image with Apache
 FROM php:8.2-apache
 
-# Install required PHP extensions
-RUN docker-php-ext-install mysqli
+# Install GD and MySQLi
+RUN apt-get update && apt-get install -y libpng-dev && \
+    docker-php-ext-install gd mysqli
 
-# Enable Apache rewrite module (useful for clean URLs)
+# Enable Apache rewrite
 RUN a2enmod rewrite
 
-# Copy your application files into Apache's root
+# Copy your app files
 COPY . /var/www/html/
 
-# Set working directory (optional if you're always in /var/www/html)
 WORKDIR /var/www/html
 
-# Fix permissions for Apache to access the files properly
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
-
-# Optional: Expose Apache default port (already exposed in php:apache images)
-EXPOSE 80
+# Set permissions (optional)
+RUN chown -R www-data:www-data /var/www/html
