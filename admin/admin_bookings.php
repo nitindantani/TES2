@@ -12,21 +12,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Connect to DB
-// PostgreSQL connection string
-$host = 'dpg-d0g4sbjuibrs73f8ot10-a.oregon-postgres.render.com';
-$port = '5432';
-$dbname = 'touristbooking';
-$user = 'touristbooking_user';
-$password = 'QbFGlPz2ytIxmfJdHSkaeO3BCSu7HBMl';
-
-// Establish connection
-$conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
-
-if (!$conn) {
-    die("Connection failed: " . pg_last_error());
-} else {
-    echo "Connection successful!";
-}
+$conn = new mysqli("localhost", "root", "", "TouristBooking");
+if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
 // Fetch all bookings, ordering by ID
 $sql = "SELECT * FROM bookings ORDER BY id ASC";
