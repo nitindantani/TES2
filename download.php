@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Connect to DB
-$conn = new mysqli("localhost", "root", "", "TouristPDF");
+$conn = new mysqli("sql12.freesqldatabase.com", "sql12783951", "AY3kzpvH9n", "sql12783951");
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
