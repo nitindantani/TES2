@@ -11,8 +11,8 @@ if (!$code) {
 }
 
 // connect
-$bk = new mysqli('localhost','root','','touristbooking');
-$sc = new mysqli('localhost','root','','scanner');
+$bk = new mysqli('sql12.freesqldatabase.com','sql12783951','AY3kzpvH9n','sql12783951');
+$sc = new mysqli('sql12.freesqldatabase.com','sql12784142','IgcSQrkBtC','sql12784142');
 
 // lookup
 $stmt = $bk->prepare(
@@ -44,7 +44,7 @@ try {
     $vals[]  = $row[$c];
   }
 
-  $ins = $sc->prepare("INSERT INTO booking ($colL) VALUES ($ph)");
+  $ins = $sc->prepare("INSERT INTO scanned_booking ($colL) VALUES ($ph)");
   $ins->bind_param($types, ...$vals);
   $ins->execute();
 
