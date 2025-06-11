@@ -23,7 +23,7 @@ if ($db->connect_error) {
 $stmt = $db->prepare("
     SELECT id, name, visit_date, mobile, email,
            DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') AS scanned_at
-      FROM booking
+      FROM scanned_bookings
      WHERE DATE(created_at) BETWEEN ? AND ?
      ORDER BY created_at ASC
 ");
