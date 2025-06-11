@@ -1,7 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -19,7 +25,7 @@ body {
 }
 
 header {
-    background: #00796b; /* New primary color */
+    background: #00796b;
     color: white;
     padding: 20px;
     display: flex;
@@ -27,10 +33,13 @@ header {
     align-items: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 header .logo {
-    font-size: 32px; /* Increased font size */
+    font-size: 32px;
     font-weight: 600;
     letter-spacing: 2px;
 }
@@ -43,12 +52,14 @@ header nav {
 header nav a {
     color: white;
     text-decoration: none;
-    font-size: 20px; /* Increased font size */
+    font-size: 20px;
     transition: color 0.3s;
 }
 
-header nav a:hover {
-    color: #ffccbc; /* New hover color */
+header nav a:hover,
+header nav a:focus {
+    color: #ffccbc;
+    outline: none;
 }
 
 header .search-bar {
@@ -60,11 +71,12 @@ header .search-bar input {
     padding: 10px;
     border: none;
     border-radius: 5px;
+    width: 200px;
 }
 
 header .search-bar button {
     padding: 10px 15px;
-    background-color: #ff5722; /* New button color */
+    background-color: #ff5722;
     color: white;
     border: none;
     border-radius: 5px;
@@ -73,14 +85,16 @@ header .search-bar button {
     transition: background-color 0.3s;
 }
 
-header .search-bar button:hover {
-    background-color: #f44336; /* Darker shade on hover */
+header .search-bar button:hover,
+header .search-bar button:focus {
+    background-color: #f44336;
+    outline: none;
 }
 
 h1 {
     text-align: center;
     margin-bottom: 40px;
-    color: #00796b; /* New heading color */
+    color: #00796b;
     font-size: 40px;
     text-shadow: 2px 2px #ccc;
 }
@@ -88,7 +102,7 @@ h1 {
 h2 {
     margin-top: 40px;
     text-align: center;
-    color: #ff5722; /* New subheading color */
+    color: #ff5722;
     font-size: 32px;
 }
 
@@ -106,10 +120,11 @@ h2 {
     text-align: center;
     padding: 20px;
     transition: transform 0.3s, box-shadow 0.3s;
+    animation: fadeInUp 0.5s ease both;
 }
 
 .place-card:hover {
-    transform: scale(1.05); /* Scale effect on hover */
+    transform: scale(1.05);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 }
 
@@ -123,7 +138,7 @@ h2 {
 .place-card h3 {
     margin-top: 15px;
     font-size: 26px;
-    color: #ff5722; /* New card title color */
+    color: #ff5722;
 }
 
 .place-card p {
@@ -139,24 +154,26 @@ h2 {
 
 .place-card .map {
     font-size: 16px;
-    color: #ff5722; /* New map link color */
+    color: #ff5722;
     text-decoration: underline;
 }
 
 .book-btn {
     padding: 12px 25px;
-    background: linear-gradient(45deg, #ff5722, #ff9800); /* Gradient button */
+    background: linear-gradient(45deg, #ff5722, #ff9800);
     color: white;
     border: none;
     border-radius: 7px;
     cursor: pointer;
-    font-size: 20px; /* Increased font size */
+    font-size: 20px;
     transition: background 0.3s, transform 0.3s;
 }
 
-.book-btn:hover {
-    transform: translateY(-2px); /* Slight lift on hover */
-    background: linear-gradient(45deg, #ff9800, #ff5722); /* Reverse gradient on hover */
+.book-btn:hover,
+.book-btn:focus {
+    transform: translateY(-2px);
+    background: linear-gradient(45deg, #ff9800, #ff5722);
+    outline: none;
 }
 
 #ticketModal {
@@ -186,12 +203,18 @@ h2 {
     margin-top: 20px;
 }
 
-input, select {
+input,
+select {
     width: 100%;
     padding: 12px;
     margin: 12px 0;
     border: 1px solid #ccc;
     border-radius: 7px;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #ff9800;
 }
 
 .modal-buttons {
@@ -203,7 +226,7 @@ input, select {
 .modal-buttons button {
     width: 48%;
     padding: 12px;
-    background-color: #ff5722; /* New button color */
+    background-color: #ff5722;
     color: white;
     border: none;
     border-radius: 7px;
@@ -211,10 +234,106 @@ input, select {
     font-size: 18px;
 }
 
-.modal-buttons button:hover {
-    background-color: #f44336; /* Darker shade on hover */
+.modal-buttons button:hover,
+.modal-buttons button:focus {
+    background-color: #f44336;
+    outline: none;
 }
 
+.auth-links a {
+    display: inline-block;
+    padding: 8px 16px;
+    margin-left: 10px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.auth-links a:hover,
+.auth-links a:focus {
+    background-color: #0056b3;
+    outline: none;
+}
+
+.signup-container {
+    max-width: 450px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: whitesmoke;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.signup-container h1 {
+    font-size: 32px;
+    margin-bottom: 25px;
+    color: #00796b;
+}
+
+.signup-form input {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 16px;
+}
+
+.signup-form button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(45deg, #ff5722, #ff9800);
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.signup-form button:hover,
+.signup-form button:focus {
+    transform: translateY(-2px);
+    background: linear-gradient(45deg, #ff9800, #ff5722);
+    outline: none;
+}
+
+.signup-form p {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.signup-form a {
+    color: #ff5722;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-form a:hover,
+.signup-form a:focus {
+    text-decoration: underline;
+    outline: none;
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
 @media (max-width: 768px) {
     h1 {
         font-size: 32px;
@@ -262,77 +381,10 @@ input, select {
         text-align: center;
     }
 }
-.auth-links a {
-    display: inline-block;
-    padding: 8px 16px;
-    margin-left: 10px;
-    text-decoration: none;
-    background-color: #007bff; /* Bootstrap blue */
-    color: white;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
 
-.auth-links a:hover {
-    background-color: #0056b3;
-
-}
-.signup-container {
-    max-width: 450px;
-    margin: 60px auto;
-    padding: 40px;
-    background-color: whitesmoke;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.signup-container h1 {
-    font-size: 32px;
-    margin-bottom: 25px;
-    color: #00796b;
-}
-
-.signup-form input {
-    width: 100%;
-    padding: 12px 15px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 7px;
-    font-size: 16px;
-}
-
-.signup-form button {
-    width: 100%;
-    padding: 14px;
-    background: linear-gradient(45deg, #ff5722, #ff9800);
-    color: white;
-    font-size: 18px;
-    border: none;
-    border-radius: 7px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.signup-form button:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(45deg, #ff9800, #ff5722);
-}
-
-.signup-form p {
-    margin-top: 20px;
-    font-size: 14px;
-    color: #555;
-}
-
-.signup-form a {
-    color: #ff5722;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.signup-form a:hover {
-    text-decoration: underline;
+@media (max-width: 480px) {
+    #modalContent {
+        width: 90%;
+        padding: 20px;
+    }
 }
