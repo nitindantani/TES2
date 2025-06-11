@@ -44,7 +44,7 @@ try {
     $vals[]  = $row[$c];
   }
 
-  $ins = $sc->prepare("INSERT INTO scanned_booking ($colL) VALUES ($ph)");
+  $ins = $sc->prepare("INSERT INTO scanned_bookings ($colL) VALUES ($ph)");
   $ins->bind_param($types, ...$vals);
   $ins->execute();
 
