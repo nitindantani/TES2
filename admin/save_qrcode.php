@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['code'])) {
     $email = $match_email[1] ?? '';
     $unique_code = $match_code[1] ?? '';
 
-    $conn = new mysqli('sql12.freesqldatabase.com','sql5786936','d1uDg5R8In','sql5786936');
+    $conn = new mysqli('sql5.freesqldatabase.com','sql5786936','d1uDg5R8In','sql5786936');
     if ($conn->connect_error) {
         die("❌ DB Error: " . $conn->connect_error);
     }
