@@ -9,7 +9,7 @@ if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
 }
 
 // connect to scanner DB
-$db = new mysqli('sql12.freesqldatabase.com','sql5786936','d1uDg5R8In','sql5786936');
+$db = new mysqli('sql5.freesqldatabase.com','sql5786936','d1uDg5R8In','sql5786936');
 if ($db->connect_error) {
   echo json_encode(['success'=>false,'error'=>'DB connect failed']);
   exit;
