@@ -2,80 +2,51 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Connect to DBs
-$booking_conn = new mysqli("sql12.freesqldatabase.com", "sql12783951", "AY3kzpvH9n", "sql12783951");
-$pdf_conn     = new mysqli("sql12.freesqldatabase.com", "sql12783951", "AY3kzpvH9n", "sql12783951");
+// DB connections
+$booking_conn = new mysqli("localhost", "root", "", "touristbooking");
+$pdf_conn     = new mysqli("localhost", "root", "", "touristpdf");
 
-if ($booking_conn->connect_error) {
-    die("Booking DB connection failed: " . $booking_conn->connect_error);
-}
-if ($pdf_conn->connect_error) {
-    die("PDF DB connection failed: " . $pdf_conn->connect_error);
-}
+if ($booking_conn->connect_error) die("Booking DB error: " . $booking_conn->connect_error);
+if ($pdf_conn->connect_error)     die("PDF DB error: " . $pdf_conn->connect_error);
 
 $error = "";
+$tickets = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // 1) Grab & sanitize
-    $mobile     = trim($_POST['mobile']      ?? '');
+    $mobile     = trim($_POST['mobile'] ?? '');
     $visit_date = trim($_POST['visit_date'] ?? '');
 
-    // 2) Validate
     if (empty($mobile) || empty($visit_date)) {
         $error = "❌ Both mobile number and visit date are required.";
     } elseif (!preg_match('/^\d{10}$/', $mobile)) {
         $error = "❌ Mobile must be 10 digits.";
     }
 
-    // 3) Query bookings
     if (empty($error)) {
-        $stmt = $booking_conn->prepare(
-            "SELECT id, name 
-             FROM bookings 
-             WHERE mobile = ? 
-               AND visit_date = ?"
-        );
-        if (!$stmt) {
-            die("Prepare failed: " . $booking_conn->error);
-        }
+        $stmt = $booking_conn->prepare("SELECT id, name, place, unique_code FROM bookings WHERE mobile = ? AND visit_date = ?");
         $stmt->bind_param("ss", $mobile, $visit_date);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        if ($result->num_rows === 0) {
-            $error = "❌ No booking found for that mobile & date.";
-        } else {
-            $booking    = $result->fetch_assoc();
-            $booking_id = $booking['id'];
-            $stmt->close();
-
-            // 4) Query PDF
-            $stmt_pdf = $pdf_conn->prepare(
-                "SELECT pdf_data 
-                 FROM booking_pdfs 
-                 WHERE booking_id = ?"
-            );
-            if (!$stmt_pdf) {
-                die("Prepare failed: " . $pdf_conn->error);
-            }
-            $stmt_pdf->bind_param("i", $booking_id);
+        while ($row = $result->fetch_assoc()) {
+            // Check if PDF exists
+            $stmt_pdf = $pdf_conn->prepare("SELECT 1 FROM booking_pdfs WHERE booking_id = ?");
+            $stmt_pdf->bind_param("i", $row['id']);
             $stmt_pdf->execute();
             $stmt_pdf->store_result();
 
-            if ($stmt_pdf->num_rows === 0) {
-                $error = "❌ Ticket PDF not found for booking #$booking_id.";
-            } else {
-                $stmt_pdf->bind_result($pdf_data);
-                $stmt_pdf->fetch();
-
-                // 5) Send PDF
-                header('Content-Type: application/pdf');
-                header("Content-Disposition: attachment; filename=ticket_{$booking_id}.pdf");
-                echo $pdf_data;
-                exit();
+            if ($stmt_pdf->num_rows > 0) {
+                $tickets[] = $row;
             }
+
             $stmt_pdf->close();
         }
+
+        if (empty($tickets)) {
+            $error = "❌ No tickets found for the given mobile number and visit date.";
+        }
+
+        $stmt->close();
     }
 }
 
@@ -123,6 +94,37 @@ $pdf_conn->close();
             text-align: center;
             margin-bottom: 15px;
         }
+        .ticket-list {
+            max-width: 600px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .ticket {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+        .ticket:last-child {
+            border-bottom: none;
+        }
+        .ticket code {
+            background: #eee;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .download-btn {
+            display: inline-block;
+            margin-top: 8px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+        }
+        .download-btn:hover {
+            background: #218838;
+        }
     </style>
 </head>
 <body>
@@ -145,7 +147,21 @@ $pdf_conn->close();
             required
             value="<?= isset($_POST['visit_date']) ? htmlspecialchars($_POST['visit_date']) : '' ?>"
         >
-        <button type="submit">Download My Ticket</button>
+        <button type="submit">Show My Tickets</button>
     </form>
+
+    <?php if (!empty($tickets)): ?>
+        <div class="ticket-list">
+            <h3>Your Booking Tickets:</h3>
+            <?php foreach ($tickets as $t): ?>
+                <div class="ticket">
+                    <strong><?= htmlspecialchars($t['name']) ?></strong><br>
+                    Place: <?= htmlspecialchars($t['place']) ?><br>
+                    Code: <code><?= htmlspecialchars($t['unique_code']) ?></code><br>
+                    <a class="download-btn" href="download.php?id=<?= $t['id'] ?>">Download PDF</a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 </body>
 </html>
