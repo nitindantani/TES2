@@ -11,8 +11,8 @@ if (!$code) {
 }
 
 // connect
-$bk = new mysqli('sql12.freesqldatabase.com','sql5786934','m3wWsIZkxF','sql5786934');
-$sc = new mysqli('sql12.freesqldatabase.com','sql5786936','d1uDg5R8In','sql5786936');
+$bk = new mysqli('sql5.freesqldatabase.com','sql5786934','m3wWsIZkxF','sql5786934');
+$sc = new mysqli('sql5.freesqldatabase.com','sql5786936','d1uDg5R8In','sql5786936');
 
 // lookup
 $stmt = $bk->prepare(
