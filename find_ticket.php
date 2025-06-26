@@ -3,8 +3,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // DB connections
-$booking_conn = new mysqli("localhost", "root", "", "touristbooking");
-$pdf_conn     = new mysqli("localhost", "root", "", "touristpdf");
+$booking_conn = new mysqli('sql12.freesqldatabase.com','sql5786934','m3wWsIZkxF','sql5786934');
+$pdf_conn     = new mysqli('sql12.freesqldatabase.com','sql5786934','m3wWsIZkxF','sql5786934');
 
 if ($booking_conn->connect_error) die("Booking DB error: " . $booking_conn->connect_error);
 if ($pdf_conn->connect_error)     die("PDF DB error: " . $pdf_conn->connect_error);
