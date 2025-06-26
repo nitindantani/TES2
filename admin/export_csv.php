@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli("sql12.freesqldatabase.com", "sql12783951", "AY3kzpvH9n", "sql12783951");
+$conn = new mysqli('sql12.freesqldatabase.com','sql5786934','m3wWsIZkxF','sql5786934');
 
 header('Content-Type: text/csv');
 header('Content-Disposition: attachment;filename="tourist_bookings.csv"');
