@@ -5,7 +5,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Database connection
-$host = "sql12.freesqldatabase.com";
+$host = "sql5.freesqldatabase.com";
 $user = "sql5786934";
 $pass = "m3wWsIZkxF";
 $db = "sql5786934";
