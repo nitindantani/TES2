@@ -1,5 +1,5 @@
 <?php
-$conn = new mysqli('sql12.freesqldatabase.com','sql5786934','m3wWsIZkxF','sql5786934');
+$conn = new mysqli('sql5.freesqldatabase.com','sql5786934','m3wWsIZkxF','sql5786934');
 $id = $_GET['id'] ?? 0;
 $result = $conn->query("SELECT * FROM bookings WHERE id = $id");
 $booking = $result->fetch_assoc();
