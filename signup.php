@@ -6,9 +6,9 @@ error_reporting(E_ALL);
 
 // Database connection
 $host = "sql12.freesqldatabase.com";
-$user = "sql12783951";
-$pass = "AY3kzpvH9n";
-$db = "sql12783951";
+$user = "sql5786934";
+$pass = "m3wWsIZkxF";
+$db = "sql5786934";
 
 $conn = new mysqli($host, $user, $pass, $db);
 
