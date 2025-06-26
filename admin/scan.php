@@ -1,5 +1,5 @@
 <?php
-$scanner_conn = new mysqli("sql12.freesqldatabase.com", "sql12784142", "IgcSQrkBtC", "sql12784142");
+$scanner_conn = new mysqli('sql12.freesqldatabase.com','sql5786936','d1uDg5R8In','sql5786936');
 
 $date = date('Y-m-d'); // today
 $result = $scanner_conn->query("SELECT COUNT(*) as total FROM scanned_bookings WHERE DATE(scanned_at) = '$date'");
